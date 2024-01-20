@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:miotonus/src/domain/models/hieght_class.dart';
 import 'package:miotonus/src/presentation/widgets/WorkoutFormFieldHeight.dart';
 import 'package:miotonus/src/utils/constants/nums.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
-
-class Height {
-  String localMin = '';
-  String localMax = '';
-  Height({required this.localMin, required this.localMax});
-}
 
 class WorkoutPage extends StatefulWidget {
   const WorkoutPage({super.key, required this.title});
