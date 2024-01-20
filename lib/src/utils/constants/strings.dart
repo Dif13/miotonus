@@ -5,7 +5,9 @@ const String appTitle = 'Миотонус';
 const String workoutTitle = 'Тренировка';
 const String workoutFormHintTextMinHeight = 'Введите минимальный рост';
 const String workoutFormHintTextMaxHeight = 'Введите максимальный рост';
-const String workoutFormTextValidator = 'Введите рост';
+const String workoutFormTextValidatorEmpty = 'Введите рост';
+const String workoutFormTextValidatorMinMoreMax =
+    'Максимальный рост меньше минимального';
 const String workoutFormTextButtonConfirm = 'Подтвердить';
 
 
