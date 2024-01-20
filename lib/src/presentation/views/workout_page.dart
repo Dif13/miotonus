@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:miotonus/src/domain/models/hieght_class.dart';
+import 'package:miotonus/src/presentation/cubits/height_cubit.dart';
 import 'package:miotonus/src/presentation/widgets/workout_form_field_height.dart';
 import 'package:miotonus/src/utils/constants/nums.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
@@ -15,7 +17,8 @@ class WorkoutPage extends StatefulWidget {
 
 class _WorkoutPageState extends State<WorkoutPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Height height = Height(localMin: 0.0, localMax: 0.0);
+
+  final heightCubit = HeightCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +31,16 @@ class _WorkoutPageState extends State<WorkoutPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           formFields(),
-          Text(height.localMin.toString()),
-          Text(height.localMax.toString()),
+          BlocBuilder<HeightCubit, Height>(
+              bloc: heightCubit,
+              builder: (context, height) {
+                return Column(
+                  children: [
+                    Text(height.localMin.toString()),
+                    Text(height.localMax.toString()),
+                  ],
+                );
+              }),
         ],
       ),
     );
@@ -45,9 +56,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
             _formKey,
             workoutFormHintTextMinHeight,
             (value) {
-              setState(() {
-                height.localMin = double.tryParse(value ?? '') ?? 0.0;
-              });
+              heightCubit.state.localMin = double.tryParse(value ?? '') ?? 0.0;
             },
           ),
           const Padding(padding: EdgeInsets.only(top: standartEdge)),
@@ -55,17 +64,16 @@ class _WorkoutPageState extends State<WorkoutPage> {
             _formKey,
             workoutFormHintTextMaxHeight,
             (value) {
-              setState(() {
-                height.localMax = double.tryParse(value ?? '') ?? 0.0;
-              });
+              heightCubit.state.localMax = double.tryParse(value ?? '') ?? 0.0;
             },
           ),
           const Padding(padding: EdgeInsets.only(top: standartEdge)),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                print(height.localMin);
-                print(height.localMax);
+                heightCubit.update_state();
+                print(heightCubit.state.localMin);
+                print(heightCubit.state.localMax);
               }
             },
             child: const Text(workoutFormTextButtonConfirm),
