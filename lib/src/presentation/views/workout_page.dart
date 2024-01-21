@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:miotonus/src/domain/models/workout_table_row.dart';
@@ -72,10 +74,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
                                             Text(row.id.toString())),
                                         _standartTableCell(Text(
                                             DateFormat.Hms().format(row.time))),
-                                        _standartTableCell(
-                                            Text(row.localMin.toString())),
-                                        _standartTableCell(
-                                            Text(row.localMax.toString())),
+                                        _standartTableCell(Text(
+                                            row.localHieghtMin.toString())),
+                                        _standartTableCell(Text(
+                                            row.localHieghtMax.toString())),
                                         _standartTableCell(
                                             Text(row.muscleTone.toString())),
                                       ],
@@ -105,7 +107,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
             _formKey,
             workoutFormHintTextMinHeight,
             (value) {
-              workoutTableRowLstCubit.state.last.localMin =
+              workoutTableRowLstCubit.state.last.localHieghtMin =
                   double.tryParse(value ?? '') ?? 0.0;
             },
           ),
@@ -114,7 +116,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
             _formKey,
             workoutFormHintTextMaxHeight,
             (value) {
-              workoutTableRowLstCubit.state.last.localMax =
+              workoutTableRowLstCubit.state.last.localHieghtMax =
                   double.tryParse(value ?? '') ?? 0.0;
             },
           ),
@@ -151,12 +153,39 @@ class _WorkoutPageState extends State<WorkoutPage> {
         ],
       );
     } else {
+      print(rowLst.length);
       return Column(
         children: [
-          Text(rowLst[rowLst.length - 1].localMin.toString()),
-          Text(rowLst[rowLst.length - 1].localMax.toString()),
+          Text(rowLst[max(rowLst.length - 2, 0)].localHieghtMin.toString()),
+          Text(rowLst[max(rowLst.length - 2, 0)].localHieghtMax.toString()),
         ],
       );
     }
   }
 }
+
+
+/*
+Макс. рост
+1) нисходящий 1-25
+Y = 4,40-0,1*x
+2) Восходящий 25 - 50
+Y = 2,107 +0,09908*x
+
+
+Мин рост
+1) 1-25
+Y = 0,08969*x-0,2243
+2) 25-32
+Y = 1,818-0,2821*x  
+3) 32 - 50
+Y = 0,6532+0,2303*x
+
+
+    1. Зона индивидуальных минимальных и максимальных значений роста (с 1 по 5 градацию);
+    2. Зона оптимальных значений тонуса мышц (с 6 по 13 градацию);
+    3. Рабочая зона (с 14 по 21 градацию);
+    4. Зона резко повышенного тонуса всех скелетных мышц (с 22 по 27 градацию);
+    5. Зона "второго дыхания" (с 28 по 36 градацию);
+    6. Зона повышенного тонуса (с 37 по 50 градацию) 
+*/

@@ -7,8 +7,8 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
           WorkoutTableRow(
               id: -1,
               time: DateTime.now(),
-              localMin: 0.0,
-              localMax: 0.0,
+              localHieghtMin: 0.0,
+              localHieghtMax: 0.0,
               muscleTone: 5),
         ]);
 
@@ -16,11 +16,11 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
     state.last = WorkoutTableRow(
         id: state.last.id,
         time: DateTime.now(),
-        localMin: state.last.localMin,
-        localMax: state.last.localMax,
+        localHieghtMin: state.last.localHieghtMin,
+        localHieghtMax: state.last.localHieghtMax,
         muscleTone: state.last.muscleTone);
-    print(state.length);
-    print(state.last.id);
+    // print(state.length);
+    // print(state.last.id);
 
     emit([...state]);
     state.last.id++;
@@ -28,8 +28,8 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
       WorkoutTableRow(
           id: state.last.id,
           time: DateTime.now(),
-          localMin: 0.0,
-          localMax: 0.0,
+          localHieghtMin: state.last.localHieghtMin,
+          localHieghtMax: state.last.localHieghtMax,
           muscleTone: 5),
     );
   }
