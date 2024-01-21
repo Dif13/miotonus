@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:miotonus/src/domain/models/workout_table_row.dart';
+import 'package:miotonus/src/presentation/cubits/user_cubit.dart';
 import 'package:miotonus/src/presentation/cubits/workout_table_row_lst_cubit.dart';
 import 'package:miotonus/src/presentation/widgets/workout_form_field_height.dart';
 import 'package:miotonus/src/utils/constants/nums.dart';
@@ -21,6 +22,7 @@ class WorkoutPage extends StatefulWidget {
 class _WorkoutPageState extends State<WorkoutPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  UserCubit userCubit = UserCubit();
   WorkoutTableRowLstCubit workoutTableRowLstCubit = WorkoutTableRowLstCubit();
 
   @override
@@ -54,7 +56,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
                           children: <TableRow>[
                             TableRow(
                               children: [
-                                _standartTableCell(const Text('id')),
+                                _standartTableCell(
+                                    const Text('id')), //TODO: fix this
                                 _standartTableCell(
                                     const Text(workoutColumnNameTime)),
                                 _standartTableCell(
@@ -68,20 +71,22 @@ class _WorkoutPageState extends State<WorkoutPage> {
                             ...workoutTableRowLstCubit.state
                                 .sublist(
                                     0, workoutTableRowLstCubit.state.length - 1)
-                                .map((row) => TableRow(
-                                      children: [
-                                        _standartTableCell(
-                                            Text(row.id.toString())),
-                                        _standartTableCell(Text(
-                                            DateFormat.Hms().format(row.time))),
-                                        _standartTableCell(Text(
-                                            row.localHieghtMin.toString())),
-                                        _standartTableCell(Text(
-                                            row.localHieghtMax.toString())),
-                                        _standartTableCell(
-                                            Text(row.muscleTone.toString())),
-                                      ],
-                                    )),
+                                .map(
+                                  (row) => TableRow(
+                                    children: [
+                                      _standartTableCell(
+                                          Text(row.id.toString())),
+                                      _standartTableCell(Text(
+                                          DateFormat.Hms().format(row.time))),
+                                      _standartTableCell(
+                                          Text(row.localHieghtMin.toString())),
+                                      _standartTableCell(
+                                          Text(row.localHieghtMax.toString())),
+                                      _standartTableCell(
+                                          Text(row.muscleTone.toString())),
+                                    ],
+                                  ),
+                                ),
                           ],
                         ),
                       ],
@@ -124,7 +129,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                workoutTableRowLstCubit.updateState();
+                workoutTableRowLstCubit.updateState(userCubit);
               }
             },
             child: const Text(workoutFormTextButtonConfirm),
@@ -153,39 +158,15 @@ class _WorkoutPageState extends State<WorkoutPage> {
         ],
       );
     } else {
-      print(rowLst.length);
       return Column(
         children: [
-          Text(rowLst[max(rowLst.length - 2, 0)].localHieghtMin.toString()),
-          Text(rowLst[max(rowLst.length - 2, 0)].localHieghtMax.toString()),
+          Text('UserID: ${userCubit.state.id}'),
+          Text(
+              'minHieght: ${rowLst[max(rowLst.length - 2, 0)].localHieghtMin}'),
+          Text(
+              'maxHieght: ${rowLst[max(rowLst.length - 2, 0)].localHieghtMax}'),
         ],
       );
     }
   }
 }
-
-
-/*
-Макс. рост
-1) нисходящий 1-25
-Y = 4,40-0,1*x
-2) Восходящий 25 - 50
-Y = 2,107 +0,09908*x
-
-
-Мин рост
-1) 1-25
-Y = 0,08969*x-0,2243
-2) 25-32
-Y = 1,818-0,2821*x  
-3) 32 - 50
-Y = 0,6532+0,2303*x
-
-
-    1. Зона индивидуальных минимальных и максимальных значений роста (с 1 по 5 градацию);
-    2. Зона оптимальных значений тонуса мышц (с 6 по 13 градацию);
-    3. Рабочая зона (с 14 по 21 градацию);
-    4. Зона резко повышенного тонуса всех скелетных мышц (с 22 по 27 градацию);
-    5. Зона "второго дыхания" (с 28 по 36 градацию);
-    6. Зона повышенного тонуса (с 37 по 50 градацию) 
-*/
