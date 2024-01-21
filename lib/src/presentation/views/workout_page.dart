@@ -79,9 +79,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
                                       _standartTableCell(Text(
                                           DateFormat.Hms().format(row.time))),
                                       _standartTableCell(
-                                          Text(row.localHieghtMin.toString())),
+                                          Text(row.localMinHeight.toString())),
                                       _standartTableCell(
-                                          Text(row.localHieghtMax.toString())),
+                                          Text(row.localMaxHeight.toString())),
                                       _standartTableCell(
                                           Text(row.muscleTone.toString())),
                                     ],
@@ -102,9 +102,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
   Widget formFields() {
     // TODO: add controllers for validate max >= min.
     final minHieghtController =
-        TextEditingController(text: userCubit.state.minHieght.toString());
+        TextEditingController(text: userCubit.state.minHeight.toString());
     final maxHieghtController =
-        TextEditingController(text: userCubit.state.maxHieght.toString());
+        TextEditingController(text: userCubit.state.maxHeight.toString());
     return Form(
       key: _formKey,
       child: Column(
@@ -112,14 +112,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
         children: [
           workoutFormFieldHeight(
             _formKey,
-            minHieghtController,
-            workoutFormHintTextMinHeight,
+            maxHieghtController,
+            workoutFormHintTextMaxHeight,
           ),
           const Padding(padding: EdgeInsets.only(top: standartEdge)),
           workoutFormFieldHeight(
             _formKey,
-            maxHieghtController,
-            workoutFormHintTextMaxHeight,
+            minHieghtController,
+            workoutFormHintTextMinHeight,
           ),
           const Padding(padding: EdgeInsets.only(top: standartEdge)),
           ElevatedButton(
@@ -127,8 +127,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
               if (_formKey.currentState!.validate()) {
                 workoutTableRowLstCubit.updateState(
                   userCubit,
-                  double.parse(minHieghtController.text),
                   double.parse(maxHieghtController.text),
+                  double.parse(minHieghtController.text),
                 );
               }
             },
@@ -162,9 +162,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
         children: [
           Text('UserID: ${userCubit.state.id}'),
           Text(
-              'minHieght: ${rowLst[max(rowLst.length - 2, 0)].localHieghtMin}'),
+              'maxHieght: ${rowLst[max(rowLst.length - 2, 0)].localMaxHeight}'),
           Text(
-              'maxHieght: ${rowLst[max(rowLst.length - 2, 0)].localHieghtMax}'),
+              'minHieght: ${rowLst[max(rowLst.length - 2, 0)].localMinHeight}'),
         ],
       );
     }

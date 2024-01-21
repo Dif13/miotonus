@@ -7,25 +7,31 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
       : super(
           [
             WorkoutTableRow(
-                id: -1,
-                time: DateTime.now(),
-                localHieghtMin: 0.0,
-                localHieghtMax: 0.0,
-                muscleTone: 5),
+              id: -1,
+              time: DateTime.now(),
+              localMaxHeight: 0.0,
+              localMinHeight: 0.0,
+              muscleTone: 0.0,
+            ),
           ],
         );
 
   void updateState(
     UserCubit userCubit,
-    double localHieghtMin,
-    double localHieghtMax,
+    double localMaxHeight,
+    double localMinHeight,
   ) {
+    double muscleTone = getMuscleTone(
+      userCubit,
+      localMaxHeight,
+      localMinHeight,
+    );
     state.last = WorkoutTableRow(
         id: state.last.id,
         time: DateTime.now(),
-        localHieghtMin: localHieghtMin,
-        localHieghtMax: localHieghtMax,
-        muscleTone: state.last.muscleTone);
+        localMinHeight: localMinHeight,
+        localMaxHeight: localMaxHeight,
+        muscleTone: muscleTone);
     //print(localHieghtMin);
     // print(state.last.id);
 
@@ -35,34 +41,85 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
       WorkoutTableRow(
           id: state.last.id,
           time: DateTime.now(),
-          localHieghtMin: state.last.localHieghtMin,
-          localHieghtMax: state.last.localHieghtMax,
+          localMaxHeight: state.last.localMaxHeight,
+          localMinHeight: state.last.localMinHeight,
           muscleTone: 5),
     );
   }
-}
 
-/*
-Макс. рост
-1) нисходящий 1-25
-Y = 4,40-0,1*x
-2) Восходящий 25 - 50
-Y = 2,107 +0,09908*x
+  double getMuscleTone(
+    UserCubit userCubit,
+    double localMaxHeight,
+    double localMinHeight,
+  ) {
+    /*
 
-
-Мин рост
-1) 1-25
-Y = 0,08969*x-0,2243
-2) 25-32
-Y = 1,818-0,2821*x  
-3) 32 - 50
-Y = 0,6532+0,2303*x
-
-
-    1. Зона индивидуальных минимальных и максимальных значений роста (с 1 по 5 градацию);
+    1. Зона индивидуальных минимальных и максимальных значений роста (с 0 по 5 градацию);
     2. Зона оптимальных значений тонуса мышц (с 6 по 13 градацию);
     3. Рабочая зона (с 14 по 21 градацию);
     4. Зона резко повышенного тонуса всех скелетных мышц (с 22 по 27 градацию);
     5. Зона "второго дыхания" (с 28 по 36 градацию);
     6. Зона повышенного тонуса (с 37 по 50 градацию) 
 */
+    double diffMaxHeight = localMaxHeight - userCubit.state.minHeight;
+    double diffMinHeight = localMinHeight - userCubit.state.minHeight;
+
+    int maxHeightMusculeToneX1 = ((4.4 - diffMaxHeight) / 0.1).round(); //[0;25]
+    int maxHeightMusculeToneX2 =
+        ((diffMaxHeight + 0.554) / 0.09908).round(); //[25;50]
+
+    int minHeightMusculeToneX1 =
+        ((diffMinHeight + 0.2243) / 0.08969).round(); //[0;25]
+    int minHeightMusculeToneX2 =
+        ((9.07 - diffMinHeight) / 0.2821).round(); //[25;32]
+    int minHeightMusculeToneX3 =
+        ((diffMinHeight + 7.3268) / 0.2303).round(); //[32;50]
+
+    Set maxHeightMusculeToneX = {
+      maxHeightMusculeToneX1 >= 0 && maxHeightMusculeToneX1 <= 25
+          ? maxHeightMusculeToneX1
+          : null,
+      maxHeightMusculeToneX2 >= 25 && maxHeightMusculeToneX2 <= 50
+          ? maxHeightMusculeToneX2
+          : null,
+    };
+    Set minHeightMusculeToneX = {
+      minHeightMusculeToneX1 >= 0 && minHeightMusculeToneX1 <= 25
+          ? minHeightMusculeToneX1
+          : null,
+      minHeightMusculeToneX2 >= 25 && minHeightMusculeToneX2 <= 32
+          ? minHeightMusculeToneX2
+          : null,
+      minHeightMusculeToneX3 >= 32 && minHeightMusculeToneX3 <= 50
+          ? minHeightMusculeToneX3
+          : null,
+    };
+    print('maxHeightMusculeToneX: $maxHeightMusculeToneX');
+    print('minHeightMusculeToneX: $minHeightMusculeToneX');
+
+    int cnt = 0;
+    int distance;
+
+    Map<int, List<List<int>>> pairs = {};
+    for (int maxX in maxHeightMusculeToneX) {
+      for (int minX in minHeightMusculeToneX) {
+        distance = (minX - maxX).abs();
+        if (pairs[distance]?.length == null) {
+          pairs[distance] = [
+            [minX, maxX]
+          ];
+        } else {
+          pairs[distance]!.add([minX, maxX]);
+        }
+      }
+    }
+
+    List<int> keys = pairs.keys.toList();
+    keys.sort();
+
+    print(keys);
+    //Todo: Выводдить одну или 2 зоны (в зависимостиот дистанции, наверное). Склеить как строку, наверное
+
+    return 3.0;
+  }
+}

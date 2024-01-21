@@ -1,10 +1,10 @@
 class User {
   int id;
-  double maxHieght, minHieght;
+  double maxHeight, minHeight;
 
   User({
     required this.id,
-    required this.minHieght,
-    required this.maxHieght,
+    required this.maxHeight,
+    required this.minHeight,
   });
 }

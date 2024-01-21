@@ -1,12 +1,12 @@
 class WorkoutTableRow {
   int id;
   DateTime time;
-  double localHieghtMin, localHieghtMax, muscleTone;
+  double localMaxHeight, localMinHeight, muscleTone;
   WorkoutTableRow({
     required this.id,
     required this.time,
-    required this.localHieghtMin,
-    required this.localHieghtMax,
+    required this.localMaxHeight,
+    required this.localMinHeight,
     required this.muscleTone,
   });
 }
