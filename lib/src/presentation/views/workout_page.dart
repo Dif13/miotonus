@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:miotonus/src/domain/models/hieght_class.dart';
-import 'package:miotonus/src/presentation/cubits/height_cubit.dart';
+import 'package:miotonus/src/domain/models/workout_table_row.dart';
+import 'package:miotonus/src/presentation/cubits/workout_table_row_lst_cubit.dart';
 import 'package:miotonus/src/presentation/widgets/workout_form_field_height.dart';
 import 'package:miotonus/src/utils/constants/nums.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
@@ -19,7 +19,7 @@ class WorkoutPage extends StatefulWidget {
 class _WorkoutPageState extends State<WorkoutPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final heightCubit = HeightCubit();
+  WorkoutTableRowLstCubit workoutTableRowLstCubit = WorkoutTableRowLstCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +34,12 @@ class _WorkoutPageState extends State<WorkoutPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               formFields(),
-              BlocBuilder<HeightCubit, Height>(
-                  bloc: heightCubit,
-                  builder: (context, height) {
+              BlocBuilder<WorkoutTableRowLstCubit, List<WorkoutTableRow>>(
+                  bloc: workoutTableRowLstCubit,
+                  builder: (context, row) {
                     return Column(
                       children: [
-                        Text(height.localMin.toString()),
-                        Text(height.localMax.toString()),
+                        support(row),
                         Table(
                           border: TableBorder.all(),
                           // columnWidths: const <int, TableColumnWidth>{
@@ -53,33 +52,34 @@ class _WorkoutPageState extends State<WorkoutPage> {
                           children: <TableRow>[
                             TableRow(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    child: Center(
-                                      child: Text(DateFormat.Hm()
-                                          .format(DateTime.now())),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    child: Center(
-                                        child:
-                                            Text(height.localMin.toString())),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    child: Center(
-                                        child:
-                                            Text(height.localMax.toString())),
-                                  ),
-                                ),
+                                _standartTableCell(const Text('id')),
+                                _standartTableCell(
+                                    const Text(workoutColumnNameTime)),
+                                _standartTableCell(
+                                    const Text(workoutColumnNameHieghtMin)),
+                                _standartTableCell(
+                                    const Text(workoutColumnNameHieghtMax)),
+                                _standartTableCell(
+                                    const Text(workoutColumnNameMusculeTone)),
                               ],
                             ),
+                            ...workoutTableRowLstCubit.state
+                                .sublist(
+                                    0, workoutTableRowLstCubit.state.length - 1)
+                                .map((row) => TableRow(
+                                      children: [
+                                        _standartTableCell(
+                                            Text(row.id.toString())),
+                                        _standartTableCell(Text(
+                                            DateFormat.Hms().format(row.time))),
+                                        _standartTableCell(
+                                            Text(row.localMin.toString())),
+                                        _standartTableCell(
+                                            Text(row.localMax.toString())),
+                                        _standartTableCell(
+                                            Text(row.muscleTone.toString())),
+                                      ],
+                                    )),
                           ],
                         ),
                       ],
@@ -93,6 +93,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
   }
 
   Widget formFields() {
+    // TODO: add controllers for validate max >= min.
+    // final minHieghtController = TextEditingController();
+    // final maxHieghtController = TextEditingController();
     return Form(
       key: _formKey,
       child: Column(
@@ -102,7 +105,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
             _formKey,
             workoutFormHintTextMinHeight,
             (value) {
-              heightCubit.state.localMin = double.tryParse(value ?? '') ?? 0.0;
+              workoutTableRowLstCubit.state.last.localMin =
+                  double.tryParse(value ?? '') ?? 0.0;
             },
           ),
           const Padding(padding: EdgeInsets.only(top: standartEdge)),
@@ -110,16 +114,15 @@ class _WorkoutPageState extends State<WorkoutPage> {
             _formKey,
             workoutFormHintTextMaxHeight,
             (value) {
-              heightCubit.state.localMax = double.tryParse(value ?? '') ?? 0.0;
+              workoutTableRowLstCubit.state.last.localMax =
+                  double.tryParse(value ?? '') ?? 0.0;
             },
           ),
           const Padding(padding: EdgeInsets.only(top: standartEdge)),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                heightCubit.update_state();
-                print(heightCubit.state.localMin);
-                print(heightCubit.state.localMax);
+                workoutTableRowLstCubit.updateState();
               }
             },
             child: const Text(workoutFormTextButtonConfirm),
@@ -128,5 +131,32 @@ class _WorkoutPageState extends State<WorkoutPage> {
         ],
       ),
     );
+  }
+
+  Widget _standartTableCell(child) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        child: Center(child: child),
+      ),
+    );
+  }
+
+  Widget support(List<WorkoutTableRow> rowLst) {
+    if (rowLst.isEmpty) {
+      return const Column(
+        children: [
+          Text('EmptyList'),
+          Text('EmptyList'),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Text(rowLst[rowLst.length - 1].localMin.toString()),
+          Text(rowLst[rowLst.length - 1].localMax.toString()),
+        ],
+      );
+    }
   }
 }
