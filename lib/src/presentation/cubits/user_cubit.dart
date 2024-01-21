@@ -6,8 +6,8 @@ class UserCubit extends Cubit<User> {
       : super(
           User(
             id: 0,
-            minHieght: 0.0,
-            maxHieght: 0.0,
+            minHieght: 180.0,
+            maxHieght: 184.0,
           ),
         );
 }

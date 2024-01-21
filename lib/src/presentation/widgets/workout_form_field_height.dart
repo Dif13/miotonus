@@ -3,13 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
 
 Widget workoutFormFieldHeight(
-    GlobalKey myFormKey, String myHintText, Function(String?) callback) {
+  GlobalKey myFormKey,
+  TextEditingController controller,
+  String myHintText,
+) {
   return TextFormField(
+    controller: controller,
     keyboardType: const TextInputType.numberWithOptions(decimal: true),
     inputFormatters: <TextInputFormatter>[
       FilteringTextInputFormatter.allow(RegExp(r'^(\d+)?\.?\d{0,2}'))
     ],
-    onChanged: callback,
     decoration: InputDecoration(
       hintText: myHintText,
     ),

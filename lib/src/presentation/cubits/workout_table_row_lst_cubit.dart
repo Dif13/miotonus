@@ -15,14 +15,18 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
           ],
         );
 
-  void updateState(UserCubit userCubit) {
+  void updateState(
+    UserCubit userCubit,
+    double localHieghtMin,
+    double localHieghtMax,
+  ) {
     state.last = WorkoutTableRow(
         id: state.last.id,
         time: DateTime.now(),
-        localHieghtMin: state.last.localHieghtMin,
-        localHieghtMax: state.last.localHieghtMax,
+        localHieghtMin: localHieghtMin,
+        localHieghtMax: localHieghtMax,
         muscleTone: state.last.muscleTone);
-    print(userCubit.state.id);
+    //print(localHieghtMin);
     // print(state.last.id);
 
     emit([...state]);
