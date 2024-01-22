@@ -36,7 +36,7 @@ Widget workoutFormFields(
           onPressed: () {
             if (formKey.currentState!.validate()) {
               // TODO: add  validate max >= min.
-              workoutTableRowLstCubit.updateState(
+              workoutTableRowLstCubit.addRowTableState(
                 userCubit,
                 double.parse(maxHieghtController.text),
                 double.parse(minHieghtController.text),

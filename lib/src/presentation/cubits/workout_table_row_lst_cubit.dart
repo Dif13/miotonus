@@ -18,7 +18,7 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
           ],
         );
 
-  void updateState(
+  void addRowTableState(
     UserCubit userCubit,
     double localMaxHeight,
     double localMinHeight,
@@ -49,6 +49,23 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
         localMinHeight: state.last.localMinHeight,
         muscleToneMaxHeight: muscleTone[0],
         muscleToneMinHeight: muscleTone[1],
+      ),
+    );
+  }
+
+  void clearTableState(
+    UserCubit userCubit,
+  ) {
+    state.clear();
+    emit([...state]);
+    state.add(
+      WorkoutTableRow(
+        id: -1,
+        time: DateTime.now(),
+        localMaxHeight: 0.0,
+        localMinHeight: 0.0,
+        muscleToneMaxHeight: -1,
+        muscleToneMinHeight: -1,
       ),
     );
   }

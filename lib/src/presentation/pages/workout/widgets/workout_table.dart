@@ -24,11 +24,6 @@ Widget workoutTable(
                 support(userCubit, row),
                 Table(
                   border: TableBorder.all(),
-                  // columnWidths: const <int, TableColumnWidth>{
-                  //   0: IntrinsicColumnWidth(),
-                  //   1: FlexColumnWidth(),
-                  //   2: FixedColumnWidth(64),
-                  // },
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: <TableRow>[
                     TableRow(

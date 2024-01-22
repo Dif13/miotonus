@@ -13,6 +13,7 @@ const String workoutColumnNameTime = 'Время';
 const String workoutColumnNameHieghtMin = 'Минимум роста';
 const String workoutColumnNameHieghtMax = 'Максимум роста';
 const String workoutColumnNameMusculeTone = 'Мышечный тонус';
+const String workoutButtonTextClearWorkout = 'Очистить тренировку';
 
 //Networking and APIs
 
