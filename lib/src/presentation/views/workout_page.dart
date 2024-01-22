@@ -71,6 +71,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                             ...workoutTableRowLstCubit.state
                                 .sublist(
                                     0, workoutTableRowLstCubit.state.length - 1)
+                                .reversed
                                 .map(
                                   (row) => TableRow(
                                     children: [
@@ -83,7 +84,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
                                       _standartTableCell(
                                           Text(row.localMaxHeight.toString())),
                                       _standartTableCell(
-                                          Text(row.muscleTone.toString())),
+                                        Text(
+                                            'Тонус ↑: ${row.muscleToneMaxHeight}\nТонус ↓: ${row.muscleToneMinHeight}'),
+                                      ),
                                     ],
                                   ),
                                 ),
