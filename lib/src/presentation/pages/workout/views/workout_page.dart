@@ -24,22 +24,17 @@ class _WorkoutPageState extends State<WorkoutPage> {
         title: Text(widget.title),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: ListView(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              workoutFormFields(
-                userCubit,
-                workoutTableRowLstCubit,
-              ),
-              workoutTable(
-                userCubit,
-                workoutTableRowLstCubit,
-              ),
-            ],
-          ),
-        ],
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+            workoutFormFields(userCubit, workoutTableRowLstCubit),
+            const SizedBox(height: 16),
+            workoutTable(userCubit, workoutTableRowLstCubit),
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }

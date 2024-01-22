@@ -18,11 +18,17 @@ List<int> getMuscleTone(
       ((9.07 - diffMinHeight) / 0.2821).round(); //[25;32]
   int minHeightMusculeToneX3 =
       ((diffMinHeight + 7.3268) / 0.2303).round(); //[32;50]
+  print(maxHeightMusculeToneX1);
+  print(maxHeightMusculeToneX2);
+  print(minHeightMusculeToneX1);
+  print(minHeightMusculeToneX2);
+  print(minHeightMusculeToneX3);
 
   Set maxHeightMusculeToneX = {
     maxHeightMusculeToneX1 <= 25 ? maxHeightMusculeToneX1 : null,
     maxHeightMusculeToneX2 >= 25 ? maxHeightMusculeToneX2 : null,
   };
+
   Set minHeightMusculeToneX = {
     minHeightMusculeToneX1 <= 25 ? minHeightMusculeToneX1 : null,
     minHeightMusculeToneX2 >= 25 && minHeightMusculeToneX2 <= 32
@@ -31,10 +37,11 @@ List<int> getMuscleTone(
     minHeightMusculeToneX3 >= 32 ? minHeightMusculeToneX3 : null,
   };
 
+  maxHeightMusculeToneX.removeWhere((element) => element == null);
+  minHeightMusculeToneX.removeWhere((element) => element == null);
   int distance;
-
   Map<int, List<List<int>>> pairs = {};
-  if (maxHeightMusculeToneX.isNotEmpty) {
+  if (maxHeightMusculeToneX.isNotEmpty && minHeightMusculeToneX.isNotEmpty) {
     for (int maxX in maxHeightMusculeToneX) {
       for (int minX in minHeightMusculeToneX) {
         distance = (minX - maxX).abs();
