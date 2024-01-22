@@ -11,55 +11,63 @@ import 'package:miotonus/src/utils/constants/strings.dart';
 Widget workoutTable(
   UserCubit userCubit,
   WorkoutTableRowLstCubit workoutTableRowLstCubit,
+  BoxConstraints constraint,
 ) {
   return BlocBuilder<WorkoutTableRowLstCubit, List<WorkoutTableRow>>(
       bloc: workoutTableRowLstCubit,
       builder: (context, row) {
-        return Column(
-          children: [
-            support(userCubit, row),
-            Table(
-              border: TableBorder.all(),
-              // columnWidths: const <int, TableColumnWidth>{
-              //   0: IntrinsicColumnWidth(),
-              //   1: FlexColumnWidth(),
-              //   2: FixedColumnWidth(64),
-              // },
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              children: <TableRow>[
-                TableRow(
-                  children: [
-                    _standartTableCell(const Text('id')), //TODO: fix this
-                    _standartTableCell(const Text(workoutColumnNameTime)),
-                    _standartTableCell(const Text(workoutColumnNameHieghtMin)),
-                    _standartTableCell(const Text(workoutColumnNameHieghtMax)),
-                    _standartTableCell(
-                        const Text(workoutColumnNameMusculeTone)),
+        return SizedBox(
+          height: constraint.maxHeight * 0.5,
+          child: ListView(children: [
+            Column(
+              children: [
+                support(userCubit, row),
+                Table(
+                  border: TableBorder.all(),
+                  // columnWidths: const <int, TableColumnWidth>{
+                  //   0: IntrinsicColumnWidth(),
+                  //   1: FlexColumnWidth(),
+                  //   2: FixedColumnWidth(64),
+                  // },
+                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                  children: <TableRow>[
+                    TableRow(
+                      children: [
+                        _standartTableCell(const Text('id')), //TODO: fix this
+                        _standartTableCell(const Text(workoutColumnNameTime)),
+                        _standartTableCell(
+                            const Text(workoutColumnNameHieghtMin)),
+                        _standartTableCell(
+                            const Text(workoutColumnNameHieghtMax)),
+                        _standartTableCell(
+                            const Text(workoutColumnNameMusculeTone)),
+                      ],
+                    ),
+                    ...workoutTableRowLstCubit.state
+                        .sublist(0, workoutTableRowLstCubit.state.length - 1)
+                        .reversed
+                        .map(
+                          (row) => TableRow(
+                            children: [
+                              _standartTableCell(Text(row.id.toString())),
+                              _standartTableCell(
+                                  Text(DateFormat.Hms().format(row.time))),
+                              _standartTableCell(
+                                  Text(row.localMinHeight.toString())),
+                              _standartTableCell(
+                                  Text(row.localMaxHeight.toString())),
+                              _standartTableCell(
+                                Text(
+                                    'Тонус ↑: ${row.muscleToneMaxHeight}\nТонус ↓: ${row.muscleToneMinHeight}'),
+                              ),
+                            ],
+                          ),
+                        ),
                   ],
                 ),
-                ...workoutTableRowLstCubit.state
-                    .sublist(0, workoutTableRowLstCubit.state.length - 1)
-                    .reversed
-                    .map(
-                      (row) => TableRow(
-                        children: [
-                          _standartTableCell(Text(row.id.toString())),
-                          _standartTableCell(
-                              Text(DateFormat.Hms().format(row.time))),
-                          _standartTableCell(
-                              Text(row.localMinHeight.toString())),
-                          _standartTableCell(
-                              Text(row.localMaxHeight.toString())),
-                          _standartTableCell(
-                            Text(
-                                'Тонус ↑: ${row.muscleToneMaxHeight}\nТонус ↓: ${row.muscleToneMinHeight}'),
-                          ),
-                        ],
-                      ),
-                    ),
               ],
             ),
-          ],
+          ]),
         );
       });
 }

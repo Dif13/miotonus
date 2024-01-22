@@ -24,18 +24,18 @@ class _WorkoutPageState extends State<WorkoutPage> {
         title: Text(widget.title),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
+      body: LayoutBuilder(builder: (context, constraint) {
+        return Column(
           children: [
             const SizedBox(height: 16),
             workoutFormFields(userCubit, workoutTableRowLstCubit),
             const SizedBox(height: 16),
-            workoutTable(userCubit, workoutTableRowLstCubit),
+            workoutTable(userCubit, workoutTableRowLstCubit, constraint),
             const SizedBox(height: 16),
+            FloatingActionButton(onPressed: () {}),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }
