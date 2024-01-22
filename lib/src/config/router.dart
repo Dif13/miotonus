@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import 'package:miotonus/src/presentation/views/my_home_page.dart';
-import 'package:miotonus/src/presentation/views/workout_page.dart';
+import 'package:miotonus/src/presentation/pages/workout/views/my_home_page.dart';
+import 'package:miotonus/src/presentation/pages/workout/views/workout_page.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
 
 final GoRouter router = GoRouter(
