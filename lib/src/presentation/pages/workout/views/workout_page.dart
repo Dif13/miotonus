@@ -39,14 +39,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 child: const Text('Завершить тренировку'),
               ),
               const SizedBox(height: 16),
-              OutlinedButton(
-                style: TextButton.styleFrom(
-                  side: const BorderSide(color: Colors.red, width: 2),
-                ),
+              TextButton(
                 onPressed: () {
                   workoutTableRowLstCubit.clearTableState(userCubit);
                 },
-                child: const Text(workoutButtonTextClearWorkout),
+                child: const Text(
+                  workoutButtonTextClearWorkout,
+                  style: TextStyle(color: Colors.red),
+                ),
               ),
               const SizedBox(height: 16),
             ],
