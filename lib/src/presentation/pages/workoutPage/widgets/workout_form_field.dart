@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:miotonus/src/presentation/cubits/user_cubit.dart';
 import 'package:miotonus/src/presentation/cubits/workout_table_row_lst_cubit.dart';
-import 'package:miotonus/src/presentation/pages/workout/widgets/workout_form_field_height.dart';
+import 'package:miotonus/src/presentation/pages/workoutPage/widgets/workout_form_field_height.dart';
 import 'package:miotonus/src/utils/constants/nums.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
 

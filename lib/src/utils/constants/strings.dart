@@ -15,6 +15,8 @@ const String workoutColumnNameHieghtMax = 'Максимум роста';
 const String workoutColumnNameMusculeTone = 'Мышечный тонус';
 const String workoutButtonTextClearWorkout = 'Очистить тренировку';
 
+//Training list
+const String trainingListTitle = 'Лист тренировок';
 //Networking and APIs
 
 //Storage and Datasourses

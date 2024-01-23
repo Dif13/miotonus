@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:miotonus/src/presentation/cubits/user_cubit.dart';
 import 'package:miotonus/src/presentation/cubits/workout_table_row_lst_cubit.dart';
-import 'package:miotonus/src/presentation/pages/workout/widgets/workout_form_field.dart';
-import 'package:miotonus/src/presentation/pages/workout/widgets/workout_table.dart';
+import 'package:miotonus/src/presentation/pages/workoutPage/widgets/workout_form_field.dart';
+import 'package:miotonus/src/presentation/pages/workoutPage/widgets/workout_table.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -35,7 +36,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
               workoutTable(userCubit, workoutTableRowLstCubit, constraint),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // .go('/MyHomePage');
+                  context.go('/MyHomePage');
+                },
                 child: const Text('Завершить тренировку'),
               ),
               const SizedBox(height: 16),
