@@ -1,8 +1,8 @@
-import 'package:miotonus/src/presentation/cubits/workout_table_row_lst_cubit.dart';
+import 'package:miotonus/src/domain/models/workout_table_row.dart';
 
 class Workout {
   int id;
-  WorkoutTableRowLstCubit workoutTable;
+  List<WorkoutTableRow> workoutTable;
 
   Workout({
     required this.id,

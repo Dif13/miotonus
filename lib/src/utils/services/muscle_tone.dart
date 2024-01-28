@@ -18,11 +18,11 @@ List<int> getMuscleTone(
       ((9.07 - diffMinHeight) / 0.2821).round(); //[25;32]
   int minHeightMusculeToneX3 =
       ((diffMinHeight + 7.3268) / 0.2303).round(); //[32;50]
-  print(maxHeightMusculeToneX1);
-  print(maxHeightMusculeToneX2);
-  print(minHeightMusculeToneX1);
-  print(minHeightMusculeToneX2);
-  print(minHeightMusculeToneX3);
+  // print(maxHeightMusculeToneX1);
+  // print(maxHeightMusculeToneX2);
+  // print(minHeightMusculeToneX1);
+  // print(minHeightMusculeToneX2);
+  // print(minHeightMusculeToneX3);
 
   Set maxHeightMusculeToneX = {
     maxHeightMusculeToneX1 <= 25 ? maxHeightMusculeToneX1 : null,

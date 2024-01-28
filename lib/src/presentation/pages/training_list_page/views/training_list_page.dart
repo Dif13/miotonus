@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:miotonus/src/config/router.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
 
@@ -27,7 +28,9 @@ class _TrainingListPageState extends State<TrainingListPage> {
                   title:
                       Text(workoutHistoryLstCubit.state[index].id.toString()),
                   onTap: () {
-                    print(workoutHistoryLstCubit.state[index].id.toString());
+                    currentAppStateCubit.state.tappedWorkoutID =
+                        workoutHistoryLstCubit.state[index].id;
+                    context.go('/workout_list/detail');
                   },
                 );
               },

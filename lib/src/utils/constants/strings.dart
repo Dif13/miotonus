@@ -9,6 +9,7 @@ const String workoutFormTextValidatorEmpty = 'Введите рост';
 const String workoutFormTextValidatorMinMoreMax =
     'Максимальный рост меньше минимального';
 const String workoutFormTextButtonConfirm = 'Подтвердить';
+const String workoutColumnNameID = 'ID';
 const String workoutColumnNameTime = 'Время';
 const String workoutColumnNameHieghtMin = 'Минимум роста';
 const String workoutColumnNameHieghtMax = 'Максимум роста';

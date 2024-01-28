@@ -36,8 +36,6 @@ class WorkoutTableRowLstCubit extends Cubit<List<WorkoutTableRow>> {
       muscleToneMaxHeight: muscleTone[0],
       muscleToneMinHeight: muscleTone[1],
     );
-    //print(localHieghtMin);
-    // print(state.last.id);
 
     emit([...state]);
     state.last.id++;

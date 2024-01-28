@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:miotonus/src/config/router.dart';
 import 'package:miotonus/src/domain/models/workout_table_row.dart';
 import 'package:miotonus/src/presentation/cubits/user_cubit.dart';
 import 'package:miotonus/src/presentation/cubits/workout_table_row_lst_cubit.dart';
@@ -21,20 +22,20 @@ Widget workoutTable(
           child: ListView(children: [
             Column(
               children: [
-                support(userCubit, row),
+                support(currentAppStateCubit.state.userID, -1, row),
                 Table(
                   border: TableBorder.all(),
                   defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                   children: <TableRow>[
                     TableRow(
                       children: [
-                        _standartTableCell(const Text('id')), //TODO: fix this
-                        _standartTableCell(const Text(workoutColumnNameTime)),
-                        _standartTableCell(
+                        standartTableCell(const Text(workoutColumnNameID)),
+                        standartTableCell(const Text(workoutColumnNameTime)),
+                        standartTableCell(
                             const Text(workoutColumnNameHieghtMin)),
-                        _standartTableCell(
+                        standartTableCell(
                             const Text(workoutColumnNameHieghtMax)),
-                        _standartTableCell(
+                        standartTableCell(
                             const Text(workoutColumnNameMusculeTone)),
                       ],
                     ),
@@ -44,14 +45,14 @@ Widget workoutTable(
                         .map(
                           (row) => TableRow(
                             children: [
-                              _standartTableCell(Text(row.id.toString())),
-                              _standartTableCell(
+                              standartTableCell(Text(row.id.toString())),
+                              standartTableCell(
                                   Text(DateFormat.Hms().format(row.time))),
-                              _standartTableCell(
+                              standartTableCell(
                                   Text(row.localMinHeight.toString())),
-                              _standartTableCell(
+                              standartTableCell(
                                   Text(row.localMaxHeight.toString())),
-                              _standartTableCell(
+                              standartTableCell(
                                 Text(
                                     'Тонус ↑: ${row.muscleToneMaxHeight}\nТонус ↓: ${row.muscleToneMinHeight}'),
                               ),
@@ -67,7 +68,7 @@ Widget workoutTable(
       });
 }
 
-Widget _standartTableCell(child) {
+Widget standartTableCell(child) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: SizedBox(
@@ -77,7 +78,8 @@ Widget _standartTableCell(child) {
 }
 
 Widget support(
-  UserCubit userCubit,
+  int userID,
+  int trindID,
   List<WorkoutTableRow> rowLst,
 ) {
   if (rowLst.isEmpty) {
@@ -90,7 +92,8 @@ Widget support(
   } else {
     return Column(
       children: [
-        Text('UserID: ${userCubit.state.id}'),
+        Text('UserID: $userID'),
+        Text('trindID: $userID'),
         Text('maxHieght: ${rowLst[max(rowLst.length - 2, 0)].localMaxHeight}'),
         Text('minHieght: ${rowLst[max(rowLst.length - 2, 0)].localMinHeight}'),
       ],
