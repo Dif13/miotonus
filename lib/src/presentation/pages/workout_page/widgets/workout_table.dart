@@ -19,51 +19,54 @@ Widget workoutTable(
       builder: (context, row) {
         return SizedBox(
           height: constraint.maxHeight * 0.5,
-          child: ListView(children: [
-            Column(
-              children: [
-                support(currentAppStateCubit.state.userID, -1, row),
-                Table(
-                  border: TableBorder.all(),
-                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                  children: <TableRow>[
-                    TableRow(
-                      children: [
-                        standartTableCell(const Text(workoutColumnNameID)),
-                        standartTableCell(const Text(workoutColumnNameTime)),
-                        standartTableCell(
-                            const Text(workoutColumnNameHieghtMin)),
-                        standartTableCell(
-                            const Text(workoutColumnNameHieghtMax)),
-                        standartTableCell(
-                            const Text(workoutColumnNameMusculeTone)),
-                      ],
-                    ),
-                    ...workoutTableRowLstCubit.state
-                        .sublist(0, workoutTableRowLstCubit.state.length - 1)
-                        .reversed
-                        .map(
-                          (row) => TableRow(
-                            children: [
-                              standartTableCell(Text(row.id.toString())),
-                              standartTableCell(
-                                  Text(DateFormat.Hms().format(row.time))),
-                              standartTableCell(
-                                  Text(row.localMinHeight.toString())),
-                              standartTableCell(
-                                  Text(row.localMaxHeight.toString())),
-                              standartTableCell(
-                                Text(
-                                    'Тонус ↑: ${row.muscleToneMaxHeight}\nТонус ↓: ${row.muscleToneMinHeight}'),
-                              ),
-                            ],
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              Column(
+                children: [
+                  support(currentAppStateCubit.state.userID, -1, row),
+                  Table(
+                    border: TableBorder.all(),
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    children: <TableRow>[
+                      TableRow(
+                        children: [
+                          standartTableCell(const Text(workoutColumnNameID)),
+                          standartTableCell(const Text(workoutColumnNameTime)),
+                          standartTableCell(
+                              const Text(workoutColumnNameHieghtMin)),
+                          standartTableCell(
+                              const Text(workoutColumnNameHieghtMax)),
+                          standartTableCell(
+                              const Text(workoutColumnNameMusculeTone)),
+                        ],
+                      ),
+                      ...workoutTableRowLstCubit.state
+                          .sublist(0, workoutTableRowLstCubit.state.length - 1)
+                          .reversed
+                          .map(
+                            (row) => TableRow(
+                              children: [
+                                standartTableCell(Text(row.id.toString())),
+                                standartTableCell(
+                                    Text(DateFormat.Hms().format(row.time))),
+                                standartTableCell(
+                                    Text(row.localMinHeight.toString())),
+                                standartTableCell(
+                                    Text(row.localMaxHeight.toString())),
+                                standartTableCell(
+                                  Text(
+                                      'Тонус ↑: ${row.muscleToneMaxHeight}\nТонус ↓: ${row.muscleToneMinHeight}'),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                  ],
-                ),
-              ],
-            ),
-          ]),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         );
       });
 }

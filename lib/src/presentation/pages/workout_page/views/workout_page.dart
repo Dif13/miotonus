@@ -23,6 +23,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: LayoutBuilder(builder: (context, constraint) {
+        //! BUG: LayoutBuilder всегда перехватывает на себя фокус. Автоматически скриывается клавиатура на телефоне.
         return SingleChildScrollView(
           child: Column(
             children: [
