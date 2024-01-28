@@ -5,19 +5,25 @@ List<int> getMuscleTone(
   double localMaxHeight,
   double localMinHeight,
 ) {
+  double heightDistanceKoeff =
+      (userCubit.state.maxHeight - userCubit.state.minHeight) / 4.4;
   double diffMaxHeight = localMaxHeight - userCubit.state.minHeight;
   double diffMinHeight = localMinHeight - userCubit.state.minHeight;
 
   int maxHeightMusculeToneX1 = ((4.4 - diffMaxHeight) / 0.1).round(); //[0;25]
   int maxHeightMusculeToneX2 =
-      ((diffMaxHeight + 0.554) / 0.09908).round(); //[25;50]
+      ((diffMaxHeight + 0.554) / (0.09908 * heightDistanceKoeff))
+          .round(); //[25;50]
 
   int minHeightMusculeToneX1 =
-      ((diffMinHeight + 0.2243) / 0.08969).round(); //[0;25]
+      ((diffMinHeight + 0.2243) / (0.08969 * heightDistanceKoeff))
+          .round(); //[0;25]
   int minHeightMusculeToneX2 =
-      ((9.07 - diffMinHeight) / 0.2821).round(); //[25;32]
+      ((9.07 - diffMinHeight) / (0.2821 * heightDistanceKoeff))
+          .round(); //[25;32]
   int minHeightMusculeToneX3 =
-      ((diffMinHeight + 7.3268) / 0.2303).round(); //[32;50]
+      ((diffMinHeight + 7.3268) / (0.2303 * heightDistanceKoeff))
+          .round(); //[32;50]
   // print(maxHeightMusculeToneX1);
   // print(maxHeightMusculeToneX2);
   // print(minHeightMusculeToneX1);
