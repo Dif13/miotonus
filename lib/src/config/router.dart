@@ -3,10 +3,11 @@ import 'package:miotonus/src/presentation/cubits/current_app_state.dart';
 import 'package:miotonus/src/presentation/cubits/user_cubit.dart';
 import 'package:miotonus/src/presentation/cubits/workout_history_lst.dart';
 import 'package:miotonus/src/presentation/cubits/workout_table_row_lst_cubit.dart';
-import 'package:miotonus/src/presentation/pages/detail_workout_page/detail_workout_page.dart';
-import 'package:miotonus/src/presentation/pages/root_page/views/root_page.dart';
-import 'package:miotonus/src/presentation/pages/training_list_page/views/training_list_page.dart';
-import 'package:miotonus/src/presentation/pages/workout_page/views/workout_page.dart';
+import 'package:miotonus/src/presentation/pages/detail_workout_page.dart';
+import 'package:miotonus/src/presentation/pages/profile_page.dart';
+import 'package:miotonus/src/presentation/pages/root_page.dart';
+import 'package:miotonus/src/presentation/pages/training_list_page.dart';
+import 'package:miotonus/src/presentation/pages/workout_page.dart';
 
 UserCubit userCubit = UserCubit();
 WorkoutTableRowLstCubit workoutTableRowLstCubit = WorkoutTableRowLstCubit();
@@ -21,6 +22,14 @@ final GoRouter router = GoRouter(
       builder: (context, state, navigationShell) =>
           RootPage(navigationShell: navigationShell),
       branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/profile',
+              builder: (context, state) => ProfilePage(),
+            ),
+          ],
+        ),
         StatefulShellBranch(
           routes: [
             GoRoute(

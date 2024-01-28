@@ -25,6 +25,10 @@ class RootPage extends StatelessWidget {
   List<BottomNavigationBarItem> get _buildBottomNavBarItems {
     return [
       const BottomNavigationBarItem(
+        icon: Icon(Icons.face),
+        label: profileTitle,
+      ),
+      const BottomNavigationBarItem(
         icon: Icon(Icons.sports_martial_arts),
         label: workoutTitle,
       ),

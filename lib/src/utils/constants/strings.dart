@@ -18,6 +18,9 @@ const String workoutButtonTextClearWorkout = 'Очистить трениров�
 
 //Training list
 const String trainingListTitle = 'Лист тренировок';
+
+//Profile
+const String profileTitle = 'Профиль';
 //Networking and APIs
 
 //Storage and Datasourses

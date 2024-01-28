@@ -10,4 +10,13 @@ class UserCubit extends Cubit<User> {
             minHeight: 180.0,
           ),
         );
+
+  void updateUserHeight(
+    double maxHeight,
+    double minHeight,
+  ) {
+    state.maxHeight = maxHeight;
+    state.minHeight = minHeight;
+    emit(state);
+  }
 }
