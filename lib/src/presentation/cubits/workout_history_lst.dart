@@ -14,7 +14,6 @@ class WorkoutHistoryLstCubit extends Cubit<List<Workout>> {
         );
 
   void addWorkoutToHistory(WorkoutTableRowLstCubit workout) {
-    print(state.last.id);
     state.last = Workout(id: state.last.id, workoutTable: workout);
     emit([...state]);
     state.add(Workout(

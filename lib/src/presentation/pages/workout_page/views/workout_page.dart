@@ -35,7 +35,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                 onPressed: () {
                   workoutHistoryLstCubit
                       .addWorkoutToHistory(workoutTableRowLstCubit);
-                  context.go('/MyHomePage');
+                  context.go('/workout_list');
                 },
                 child: const Text('Завершить тренировку'),
               ),
