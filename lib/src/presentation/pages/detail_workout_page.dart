@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:miotonus/src/config/router.dart';
 import 'package:miotonus/src/domain/models/workout_table_row.dart';
-import 'package:miotonus/src/presentation/pages/workout_page/widgets/workout_table.dart';
+import 'package:miotonus/src/presentation/pages/widgets/workout_table.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
 
 class DetailWorkoutPage extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:miotonus/src/config/router.dart';
-import 'package:miotonus/src/presentation/pages/workout_page/widgets/workout_form_field.dart';
-import 'package:miotonus/src/presentation/pages/workout_page/widgets/workout_table.dart';
+import 'package:miotonus/src/presentation/pages/widgets/workout_form_field.dart';
+import 'package:miotonus/src/presentation/pages/widgets/workout_table.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
 
 class WorkoutPage extends StatefulWidget {
