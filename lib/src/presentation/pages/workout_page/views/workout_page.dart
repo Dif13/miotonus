@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:miotonus/src/presentation/cubits/user_cubit.dart';
-import 'package:miotonus/src/presentation/cubits/workout_table_row_lst_cubit.dart';
-import 'package:miotonus/src/presentation/pages/workoutPage/widgets/workout_form_field.dart';
-import 'package:miotonus/src/presentation/pages/workoutPage/widgets/workout_table.dart';
+import 'package:miotonus/src/config/router.dart';
+import 'package:miotonus/src/presentation/pages/workout_page/widgets/workout_form_field.dart';
+import 'package:miotonus/src/presentation/pages/workout_page/widgets/workout_table.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
 
 class WorkoutPage extends StatefulWidget {
-  const WorkoutPage({super.key, required this.title});
-
-  final String title;
+  const WorkoutPage({
+    super.key,
+  });
 
   @override
   State<WorkoutPage> createState() => _WorkoutPageState();
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
-  UserCubit userCubit = UserCubit();
-  WorkoutTableRowLstCubit workoutTableRowLstCubit = WorkoutTableRowLstCubit();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text(workoutTitle),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: LayoutBuilder(builder: (context, constraint) {
@@ -37,7 +33,8 @@ class _WorkoutPageState extends State<WorkoutPage> {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
-                  // .go('/MyHomePage');
+                  workoutHistoryLstCubit
+                      .addWorkoutToHistory(workoutTableRowLstCubit);
                   context.go('/MyHomePage');
                 },
                 child: const Text('Завершить тренировку'),

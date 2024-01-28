@@ -17,7 +17,6 @@ class RootPage extends StatelessWidget {
         onTap: (index) => navigationShell.goBranch(
           index,
           initialLocation: index == navigationShell.currentIndex,
-          //index_locations: index == navigationShell.currentIndex,
         ),
       ),
     );
