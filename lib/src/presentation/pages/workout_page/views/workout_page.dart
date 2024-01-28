@@ -18,19 +18,17 @@ class _WorkoutPageState extends State<WorkoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(workoutTitle),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: LayoutBuilder(builder: (context, constraint) {
-        //! BUG: LayoutBuilder всегда перехватывает на себя фокус. Автоматически скриывается клавиатура на телефоне.
-        return SingleChildScrollView(
+        appBar: AppBar(
+          title: const Text(workoutTitle),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        body: SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 16),
               workoutFormFields(userCubit, workoutTableRowLstCubit),
               const SizedBox(height: 16),
-              workoutTable(userCubit, workoutTableRowLstCubit, constraint),
+              workoutTable(userCubit, workoutTableRowLstCubit), //, constraint),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
@@ -54,8 +52,6 @@ class _WorkoutPageState extends State<WorkoutPage> {
               const SizedBox(height: 16),
             ],
           ),
-        );
-      }),
-    );
+        ));
   }
 }

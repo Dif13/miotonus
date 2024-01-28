@@ -12,13 +12,12 @@ import 'package:miotonus/src/utils/constants/strings.dart';
 Widget workoutTable(
   UserCubit userCubit,
   WorkoutTableRowLstCubit workoutTableRowLstCubit,
-  BoxConstraints constraint,
 ) {
   return BlocBuilder<WorkoutTableRowLstCubit, List<WorkoutTableRow>>(
       bloc: workoutTableRowLstCubit,
       builder: (context, row) {
         return SizedBox(
-          height: constraint.maxHeight * 0.5,
+          height: MediaQuery.of(context).size.height * 0.4,
           child: ListView(
             shrinkWrap: true,
             children: [
