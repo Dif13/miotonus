@@ -43,7 +43,7 @@ class ProfilePage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        // TODO: add  validate max >= min.
+                        // TODO: add  validate max >= min. and Max != min
                         userCubit.updateUserHeight(
                           double.parse(maxHieghtController.text),
                           double.parse(minHieghtController.text),

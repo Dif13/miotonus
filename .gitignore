@@ -50,3 +50,5 @@ app.*.map.json
 /windows
 
 /docs
+lib/firebase_options.dart
+lib/src/config/firebase_options.dart
