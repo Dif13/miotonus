@@ -1,12 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:miotonus/src/config/router.dart';
+import 'package:miotonus/src/presentation/pages/auth_page.dart';
 import 'package:miotonus/src/utils/constants/strings.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//TODO: import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io' show Platform;
-
-import 'package:sign_in_button/sign_in_button.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key, required this.navigationShell});
@@ -18,22 +17,19 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   String? name, imageUrl, userEmail, uid;
-  User? _user;
 
   bool needsWeb = Platform.isLinux | Platform.isWindows | kIsWeb;
-
   @override
   void initState() {
     super.initState();
     // Авто-логин при входе.
 
     if (needsWeb == false) {
-      _auth.authStateChanges().listen((event) {
+      auth.authStateChanges().listen((event) {
         setState(() {
           //TODO: Fix it
-          _user = event;
+          user = event;
         });
       });
     } else {
@@ -43,80 +39,46 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _user != null ? widget.navigationShell : authPage(),
-      bottomNavigationBar: _user != null
-          ? BottomNavigationBar(
-              items: _buildBottomNavBarItems,
-              currentIndex: widget.navigationShell.currentIndex,
-              onTap: (index) => widget.navigationShell.goBranch(
-                index,
-                initialLocation: index == widget.navigationShell.currentIndex,
-              ),
-            )
-          : null,
-    );
-  }
-
-  Future<User?> signInWithGoogle() async {
-    GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
-    if (Platform.isLinux) {
-      print('System is not supported yet!');
-      return null;
-    }
-    if (needsWeb) {
-      // Авторизация для WEB
-      print('needsWeb: $needsWeb');
-      try {
-        final UserCredential userCredential =
-            await _auth.signInWithPopup(googleAuthProvider);
-        _user = userCredential.user;
-      } catch (e) {
-        print("Web Error: $e");
-      }
-    } else {
-      //Авторизация для мобилки
-      try {
-        _auth.signInWithProvider(googleAuthProvider);
-      } catch (e) {
-        print("Mobile Error: $e");
-      }
-    }
-
-    if (_user != null) {
-      uid = _user!.uid;
-      name = _user!.displayName;
-
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setBool('auth', true);
-      print('uid: $uid');
-      print('name: $name');
-    }
-    return _user;
-  }
-
-  Widget authPage() {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Авторизация'),
+    return SafeArea(
+      child: Scaffold(
+        body: user != null ? widget.navigationShell : AuthPage(),
+        bottomNavigationBar: user != null
+            ? BottomNavigationBar(
+                items: _buildBottomNavBarItems,
+                currentIndex: widget.navigationShell.currentIndex,
+                onTap: (index) => widget.navigationShell.goBranch(
+                  index,
+                  initialLocation: index == widget.navigationShell.currentIndex,
+                ),
+              )
+            : null,
       ),
-      body: _user != null ? userInfo() : googleSignInButton(),
     );
   }
 
   Widget userInfo() {
-    return const SizedBox();
-  }
-
-  Widget googleSignInButton() {
-    return Center(
-      child: SizedBox(
-        height: 50,
-        child: SignInButton(
-          Buttons.google,
-          text: "Войти с помощью Google",
-          onPressed: signInWithGoogle,
-        ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(user!.photoURL!),
+              ),
+            ),
+          ),
+          Text(user!.email!),
+          Text(user!.displayName ?? ''),
+          Text(user!.emailVerified.toString()),
+          ElevatedButton(
+            onPressed: auth.signOut,
+            child: const Text('Выйти'),
+          )
+        ],
       ),
     );
   }

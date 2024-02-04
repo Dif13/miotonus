@@ -20,44 +20,61 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(profileTitle),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  workoutFormFieldHeight(
-                    formKey,
-                    maxHieghtController,
-                    workoutFormHintTextMaxHeight,
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: standartEdge)),
-                  workoutFormFieldHeight(
-                    formKey,
-                    minHieghtController,
-                    workoutFormHintTextMinHeight,
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: standartEdge)),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        // TODO: add  validate max >= min. and Max != min
-                        userCubit.updateUserHeight(
-                          double.parse(maxHieghtController.text),
-                          double.parse(minHieghtController.text),
-                        );
-                      }
-                    },
-                    child: const Text(workoutFormTextButtonConfirm),
-                  ),
-                  const Padding(padding: EdgeInsets.only(top: standartEdge)),
-                ],
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(user!.photoURL!),
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+          Text(user!.email!),
+          Text(user!.displayName ?? ''),
+          Text(user!.emailVerified.toString()),
+          Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                workoutFormFieldHeight(
+                  formKey,
+                  maxHieghtController,
+                  workoutFormHintTextMaxHeight,
+                ),
+                const Padding(padding: EdgeInsets.only(top: standartEdge)),
+                workoutFormFieldHeight(
+                  formKey,
+                  minHieghtController,
+                  workoutFormHintTextMinHeight,
+                ),
+                const Padding(padding: EdgeInsets.only(top: standartEdge)),
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      // TODO: add  validate max >= min. and Max != min
+                      userCubit.updateUserHeight(
+                        double.parse(maxHieghtController.text),
+                        double.parse(minHieghtController.text),
+                      );
+                    }
+                  },
+                  child: const Text(workoutFormTextButtonConfirm),
+                ),
+                const Padding(padding: EdgeInsets.only(top: standartEdge)),
+              ],
+            ),
+          ),
+          Expanded(child: SizedBox()),
+          ElevatedButton(
+            onPressed: auth.signOut,
+            child: const Text('Выйти'),
+          )
+        ],
       ),
     );
   }

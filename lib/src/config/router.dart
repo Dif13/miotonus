@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:miotonus/src/presentation/cubits/current_app_state.dart';
 import 'package:miotonus/src/presentation/cubits/user_cubit.dart';
@@ -8,6 +9,11 @@ import 'package:miotonus/src/presentation/pages/profile_page.dart';
 import 'package:miotonus/src/presentation/pages/root_page.dart';
 import 'package:miotonus/src/presentation/pages/training_list_page.dart';
 import 'package:miotonus/src/presentation/pages/workout_page.dart';
+
+final FirebaseAuth auth = FirebaseAuth.instance;
+
+GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
+User? user;
 
 UserCubit userCubit = UserCubit();
 WorkoutTableRowLstCubit workoutTableRowLstCubit = WorkoutTableRowLstCubit();

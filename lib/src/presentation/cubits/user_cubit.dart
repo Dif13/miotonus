@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:miotonus/src/domain/models/user.dart';
+import 'package:miotonus/src/domain/models/profile.dart';
 
-class UserCubit extends Cubit<User> {
+class UserCubit extends Cubit<Profile> {
   UserCubit()
       : super(
-          User(
+          Profile(
             id: 0,
             maxHeight: 184.4,
             minHeight: 180.0,
