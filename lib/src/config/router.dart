@@ -12,8 +12,7 @@ import 'package:miotonus/src/presentation/pages/workout_page.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
-User? user;
+final GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
 
 UserCubit userCubit = UserCubit();
 WorkoutTableRowLstCubit workoutTableRowLstCubit = WorkoutTableRowLstCubit();

@@ -29,7 +29,7 @@ class _RootPageState extends State<RootPage> {
       auth.authStateChanges().listen((event) {
         setState(() {
           //TODO: Fix it
-          user = event;
+          userCubit.state.user = event;
         });
       });
     } else {
@@ -41,8 +41,10 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: user != null ? widget.navigationShell : AuthPage(),
-        bottomNavigationBar: user != null
+        body: userCubit.state.user != null
+            ? widget.navigationShell
+            : const AuthPage(),
+        bottomNavigationBar: userCubit.state.user != null
             ? BottomNavigationBar(
                 items: _buildBottomNavBarItems,
                 currentIndex: widget.navigationShell.currentIndex,
@@ -67,13 +69,13 @@ class _RootPageState extends State<RootPage> {
             width: 100,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(user!.photoURL!),
+                image: NetworkImage(userCubit.state.user!.photoURL!),
               ),
             ),
           ),
-          Text(user!.email!),
-          Text(user!.displayName ?? ''),
-          Text(user!.emailVerified.toString()),
+          Text(userCubit.state.user!.email!),
+          Text(userCubit.state.user!.displayName ?? ''),
+          Text(userCubit.state.user!.emailVerified.toString()),
           ElevatedButton(
             onPressed: auth.signOut,
             child: const Text('Выйти'),

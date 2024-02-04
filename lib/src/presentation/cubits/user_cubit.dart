@@ -6,6 +6,7 @@ class UserCubit extends Cubit<Profile> {
       : super(
           Profile(
             id: 0,
+            user: null,
             maxHeight: 184.4,
             minHeight: 180.0,
           ),

@@ -4,9 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:miotonus/src/config/router.dart';
+import 'package:miotonus/src/presentation/cubits/user_cubit.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 
 class AuthPage extends StatefulWidget {
+  const AuthPage({super.key});
+
   @override
   State<AuthPage> createState() => _AuthPageState();
 }
@@ -50,6 +53,6 @@ class _AuthPageState extends State<AuthPage> {
         print("Mobile Error: $e");
       }
     }
-    return user;
+    return userCubit.state.user;
   }
 }
