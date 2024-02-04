@@ -28,13 +28,13 @@ class ProfilePage extends StatelessWidget {
             width: 100,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(user!.photoURL!),
+                image: NetworkImage(userCubit.state.user!.photoURL!),
               ),
             ),
           ),
-          Text(user!.email!),
-          Text(user!.displayName ?? ''),
-          Text(user!.emailVerified.toString()),
+          Text(userCubit.state.user!.email!),
+          Text(userCubit.state.user!.displayName ?? ''),
+          Text(userCubit.state.user!.emailVerified.toString()),
           Form(
             key: formKey,
             child: Column(
